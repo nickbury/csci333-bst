@@ -36,13 +36,44 @@ void BST<T>::insert(T v) {
 
 template <typename T>
 void BST<T>::remove(T v) {
-  Node<T>* temp = new Node<T>(v);
-  root = temp;
+  Node<T>** curr = &root;
+  while (*curr != 0 && (*curr)->getValue() != v) {
+    if ((*curr)->getValue() > v)
+      curr = &((*curr)->getLeftChild());
+    else if ((*curr)->getValue() < v)
+      curr = &((*curr)->getRightChild());
+  }
+  //if node doesn't exist
+  if (*curr == 0) {
+    std::cout << "Value not found in tree" << std::endl;
+  } else {
+
+  Node<T>* temp = *curr;
+  if ((*curr)->getLeftChild() == 0 && (*curr)->getRightChild() == 0) {
+    *curr = 0;
+    delete temp;
+  }else if ((*curr)->getLeftChild() == 0) {
+    *curr = (*curr)->getRightChild();
+    delete temp;
+  }else if ((*curr)->getRightChild() == 0) {
+    *curr = (*curr)->getLeftChild();
+    delete temp;
+  }else {
+    //find inorder successor (ios)
+    Node<T>* ios = (*curr)->getRightChild();
+    while (ios->getLeftChild() != 0) {
+      ios = ios->getLeftChild();
+    }
+    ios->setLeftChild(*((*curr)->getLeftChild()));
+    *curr = ios;
+    delete temp;
+  }
+ }
 }
 
 template <typename T>
 void BST<T>::print() {
-  traversalPrint(root);
+  
 }
 
 template <typename T>

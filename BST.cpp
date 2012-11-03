@@ -78,7 +78,8 @@ void BST<T>::remove(T v) {
 template <typename T>
 void BST<T>::print() {
   std::list<string>* printQ = createPrintQueue();
-  for (int i=0; i<=(int)printQ->size(); ++i) {
+  int size = (int)printQ->size();
+  for (int i=0; i<size; ++i) {
     std::cout << printQ->front() << std::endl;
     printQ->pop_front();
   }
@@ -94,7 +95,7 @@ std::list<string>* BST<T>::createPrintQueue() {
   q->push_back(curr);
   while (!q->empty()) {
     curr = q->front();
-    q->pop_front();
+    
     if (curr->getLeftChild() != 0) {
       printQ->push_back(toString(curr->getLeftChild()->getValue()));
       q->push_back(curr->getLeftChild());
@@ -107,6 +108,8 @@ std::list<string>* BST<T>::createPrintQueue() {
     }else {
       printQ->push_back("-");
     }
+    q->pop_front();
+    //printQ->push_back(toString(curr->getValue()));
   }
   delete q;
   return printQ;  

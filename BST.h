@@ -5,6 +5,23 @@
 #include <string>
 #include <list>
 
+//value container for printQ
+template <typename T>
+class VCT {
+  private:
+    T value;
+    //state initialized in constructor with value of 0
+    //determines whether a value is displayed in the tree
+    int state;
+
+  public:
+    VCT<T>();
+    T getValue();
+    void setValue(T v);
+    int getState();
+    void stateOn();
+};
+
 template <typename T>
 class BST {
  private:
@@ -22,22 +39,7 @@ class BST {
   void print();
 };
 
-//value container for printQ
-template <typename T>
-class VCT {
-  private:
-    T value;
-    //state initialized in constructor with value of 0
-    //determines whether a value is displayed in the tree
-    int state;
 
-  public:
-    VCT<T>();
-    T getValue();
-    void setValue(T v);
-    int getState();
-    void stateOn();
-};
 
 
 #endif

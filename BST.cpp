@@ -1,6 +1,9 @@
 #include "BST.h"
 #include <iostream>
+#include <sstream>
 #include <list>
+
+using std::string;
 
 template <typename T>
 BST<T>::BST() {
@@ -74,39 +77,46 @@ void BST<T>::remove(T v) {
 
 template <typename T>
 void BST<T>::print() {
-  std::list< VCT<T>* >* printQ = createPrintQueue();
-  for (int i=0; i<=printQ->size(); ++i) {
+  std::list<string>* printQ = createPrintQueue();
+  for (int i=0; i<=(int)printQ->size(); ++i) {
     std::cout << printQ->front() << std::endl;
     printQ->pop_front();
   }
 }
 
 template <typename T>
-std::list< VCT<T>* >* createPrintQueue() {
-  std::list< VCT<T>* >* printQ = new std::list< VCT<T>* >();
+std::list<string>* BST<T>::createPrintQueue() {
+  std::list<string>* printQ = new std::list<string>();
   std::list< Node<T>* >* q = new std::list< Node<T>* >();
   
   Node<T>* curr = root;
-  printQ->push_back(curr->getValue());
+  printQ->push_back(toString(curr->getValue()));
   q->push_back(curr);
   while (!q->empty()) {
     curr = q->front();
     q->pop_front();
     if (curr->getLeftChild() != 0) {
-      printQ->push_back(curr->getLeftChild()->getValue());
+      printQ->push_back(toString(curr->getLeftChild()->getValue()));
       q->push_back(curr->getLeftChild());
     }else {
-      printQ->push_back(0);
+      printQ->push_back("-");
     }
     if (curr->getRightChild() != 0) {
-      printQ->push_back(curr->getRightChild()->getValue());
+      printQ->push_back(toString(curr->getRightChild()->getValue()));
       q->push_back(curr->getRightChild());
     }else {
-      printQ->push_back(0);
+      printQ->push_back("-");
     }
   }
   delete q;
   return printQ;  
+}
+
+template <typename T>
+string BST<T>::toString(T v) {
+  std::stringstream s;
+  s << v;
+  return s.str();
 }
 
 template <typename T>
@@ -118,26 +128,6 @@ void BST<T>::traversalPrint(Node<T>* root) {
   }
 }
 
-template <typename T>
-VCT<T>::VCT<T>() {
-  state = 0;
-}
-template <typename T>
-T VCT<T>::getValue() {
-  return value;
-}
-template <typename T>
-void VCT<T>::setValue(T v) {
-  value = v;
-}
-template <typename T>
-int VCT<T>::getState() {
-  return state;
-}
-template <typename T>
-void VCT<T>::stateOn() {
-  state = 1;
-}
 
 template class BST<int>;
 template class BST<double>;

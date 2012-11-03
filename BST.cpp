@@ -79,6 +79,7 @@ template <typename T>
 void BST<T>::print() {
   std::list<string>* printQ = createPrintQueue();
   int size = (int)printQ->size();
+  std::cout << size << " " << getDepth(root, 0) << std::endl;
   for (int i=0; i<size; ++i) {
     std::cout << printQ->front() << std::endl;
     printQ->pop_front();
@@ -113,6 +114,20 @@ std::list<string>* BST<T>::createPrintQueue() {
   }
   delete q;
   return printQ;  
+}
+
+template <typename T>
+int BST<T>::getDepth(Node<T>* root, int depth) {
+  if(root != 0 && (root->getLeftChild() !=0 || root->getRightChild())) {
+    int leftDepth = getDepth(root->getLeftChild(), depth+1);
+    int rightDepth = getDepth(root->getRightChild(), depth+1);
+    if(leftDepth>rightDepth)
+      return leftDepth;
+    else
+      return rightDepth;
+  }
+  else
+    return depth;
 }
 
 template <typename T>

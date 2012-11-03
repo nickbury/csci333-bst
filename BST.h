@@ -11,6 +11,7 @@ class BST {
   Node<T>* root;
   void traversalPrint(Node<T>* root);
   std::list<std::string>* createPrintQueue();
+  int getDepth(Node<T>* root, int depth);
   std::string toString(T v);
 
  public:

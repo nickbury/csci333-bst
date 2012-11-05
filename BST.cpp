@@ -77,6 +77,26 @@ void BST<T>::remove(T v) {
 
 template <typename T>
 void BST<T>::print() {
+  /*Note for a future print implementation:
+    ---
+  Instead of using createPrintQueue() to get the node values of the tree,
+  use a vector< vector<string> > as the final print queue.
+  Each vector<string> would correspond to a either a level of the tree
+  or a line between the levels that contains '/' or '\'.
+  Each vector<string> would be intialized to length 2^treeDepth * 3
+  and populated with spaces.
+
+  -- the print function
+    Find the node values on the fly, keeping track of whether the value came
+    from the LC or RC of the previous node.
+    The values would then be inserted into the appropriate vector.
+    The location of the insertion would be based on what level you are on 
+    and where the parent node was inserted.
+
+  -- printing the vector< vector<string> >
+    This would be the easy part, only requiring two for-loops.
+
+  */
   std::list<string>* printQ = createPrintQueue();
   int size = (int)printQ->size();
   std::cout << size << " " << getDepth(root, 0) << std::endl;
